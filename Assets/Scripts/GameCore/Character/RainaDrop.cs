@@ -4,31 +4,44 @@ namespace GameCore.Character
 {
     public class RainaDrop : MonoBehaviour
     {
-        private Rigidbody2D _rigidbody2D;
-        private Vector2     zero;
-        private string      _tonsen = "統神";
-        private string      _raina  = "萊納";
+    #region Private Variables
+
+        private          Rigidbody2D _rigidbody2D;
+        private readonly string      _raina  = "萊納";
+        private readonly string      _tonsen = "統神";
+        private          Vector2     zero;
+
+    #endregion
+
+    #region Unity events
 
         private void Start()
         {
-            this.name    = _raina;
+            name         = _raina;
             _rigidbody2D = GetComponent<Rigidbody2D>();
         }
+
+    #endregion
+
+    #region Events
 
         private void OnTriggerEnter2D(Collider2D triggeredObject)
         {
             if (triggeredObject.name == _tonsen ||
                 triggeredObject.name == _raina)
-            {
                 StopMoving(triggeredObject);
-            }
         }
+
+    #endregion
+
+    #region Private Methods
 
         private void StopMoving(Collider2D triggeredObject)
         {
-            _rigidbody2D.isKinematic = true;
-            _rigidbody2D.velocity    = Vector2.zero;
-            transform.parent         = triggeredObject.transform;
+            transform.parent = triggeredObject.transform;
+            GetComponent<TonMove>()?.StopMoving();
         }
+
+    #endregion
     }
 }

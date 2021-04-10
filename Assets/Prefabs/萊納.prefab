@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 1635655136328283344}
   - component: {fileID: 1635655136328283345}
   - component: {fileID: 1635655136328283350}
+  - component: {fileID: 559079276}
   m_Layer: 0
   m_Name: "\u840A\u7D0D"
   m_TagString: Untagged
@@ -123,7 +124,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1635655136328283346}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -174,3 +175,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee1a9fe71db4355852150b3dc3f8ae6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &559079276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1635655136328283346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d7e185483a540c6b9e9305e26f01ad7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultFaceRight: 1
+  MoveSpeed_Horzontal: 3
+  MoveSpeed_Vertical: 3
+  SpriteRenderer: {fileID: 0}
+  CanControl: 0
