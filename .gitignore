@@ -61,3 +61,5 @@ crashlytics-build.properties
 Logs/
 
 ProjectSettings/ProjectVersion.txt
+
+.idea/
