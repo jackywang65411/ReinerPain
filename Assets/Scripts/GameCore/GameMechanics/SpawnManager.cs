@@ -13,6 +13,7 @@ namespace GameCore.GameMechanics
         private GameObject prefab;
 
         [SerializeField]
+        [Header("多久產生一次物件")]
         private float eachSpawnTime;
 
         private void Start()

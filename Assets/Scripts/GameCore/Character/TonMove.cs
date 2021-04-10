@@ -6,23 +6,27 @@ namespace GameCore.Character
     {
     #region Private Variables
 
-        private bool _flipX;
-
+        private bool      _flipX;
         private Transform _transform;
 
         [SerializeField]
+        [Header("是否能控制，若不能則自動移動")]
         private bool CanControl;
 
         [SerializeField]
+        [Header("預設面向右嗎?")]
         private bool DefaultFaceRight;
 
         [SerializeField]
+        [Header("水平移動速度")]
         private float MoveSpeed_Horzontal = 3f;
 
         [SerializeField]
+        [Header("垂直移動速度")]
         private float MoveSpeed_Vertical = 3f;
 
         [SerializeField]
+        [Header("判定面向的SpriteRenderer")]
         private SpriteRenderer SpriteRenderer;
 
     #endregion
