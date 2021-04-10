@@ -9,7 +9,7 @@ namespace GameCore.GameMechanics
 
         private void Start()
         {
-            
+
         }
     }
 }
