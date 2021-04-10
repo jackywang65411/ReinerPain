@@ -4,18 +4,27 @@ namespace GameCore.Character
 {
     public class TonMove : MonoBehaviour
     {
-        [SerializeField]
-        private SpriteRenderer _spriteRenderer;
+    #region Private Variables
+
+        private bool _flipX;
 
         private Transform _transform;
 
         [SerializeField]
-        private float MoveSpeed = 3f;
-
-        [SerializeField]
         private bool defaultFaceRight;
 
-        private bool _flipX;
+        [SerializeField]
+        private float MoveSpeed_Horzontal = 3f;
+
+        [SerializeField]
+        private float MoveSpeed_Vertical = 3f;
+
+        [SerializeField]
+        private SpriteRenderer _spriteRenderer;
+
+    #endregion
+
+    #region Unity events
 
         private void Start()
         {
@@ -23,23 +32,9 @@ namespace GameCore.Character
             _spriteRenderer.flipX = !defaultFaceRight;
         }
 
-        private void Update()
-        {
-            var horizontalValue = Input.GetAxisRaw("Horizontal");
-            var verticalValue   = Input.GetAxisRaw("Vertical");
-            _transform.position += new Vector3(horizontalValue , verticalValue , 0)
-                                   * (Time.deltaTime * MoveSpeed);
-            HandlerFlip(horizontalValue);
-        }
+    #endregion
 
-        private void HandlerFlip(float horizontalValue)
-        {
-            var faceRight = _spriteRenderer.flipX;
-            if (horizontalValue > 0 && faceRight == GetFaceValue(1))
-                _spriteRenderer.flipX = !faceRight;
-            else if (horizontalValue < 0 && faceRight == GetFaceValue(-1))
-                _spriteRenderer.flipX = !faceRight;
-        }
+    #region Private Methods
 
         private bool GetFaceValue(int horizontalValue)
         {
@@ -54,5 +49,26 @@ namespace GameCore.Character
 
             return false;
         }
+
+        private void HandlerFlip(float horizontalValue)
+        {
+            var faceRight = _spriteRenderer.flipX;
+            if (horizontalValue > 0 && faceRight == GetFaceValue(1))
+                _spriteRenderer.flipX = !faceRight;
+            else if (horizontalValue < 0 && faceRight == GetFaceValue(-1))
+                _spriteRenderer.flipX = !faceRight;
+        }
+
+        private void Update()
+        {
+            var horizontalValue = Input.GetAxisRaw("Horizontal");
+            var verticalValue   = Input.GetAxisRaw("Vertical");
+            var x               = horizontalValue * MoveSpeed_Horzontal;
+            var y               = verticalValue * MoveSpeed_Vertical;
+            _transform.position += new Vector3(x , y , 0) * Time.deltaTime;
+            HandlerFlip(horizontalValue);
+        }
+
+    #endregion
     }
 }

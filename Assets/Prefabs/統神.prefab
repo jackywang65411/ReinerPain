@@ -147,7 +147,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spriteRenderer: {fileID: 6248121705307566582}
-  MoveSpeed: 10
+  MoveSpeed_Horzontal: 7
+  MoveSpeed_Vertical: 4
   defaultFaceRight: 1
 --- !u!61 &6248121706257659984
 BoxCollider2D:
