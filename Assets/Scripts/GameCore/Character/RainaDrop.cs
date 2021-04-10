@@ -5,16 +5,20 @@ namespace GameCore.Character
     public class RainaDrop : MonoBehaviour
     {
         private Rigidbody2D _rigidbody2D;
+        private Vector2     zero;
+        private string      _tonsen = "統神";
+        private string      _raina  = "萊納";
 
         private void Start()
         {
-            this.name    = "萊納";
+            this.name    = _raina;
             _rigidbody2D = GetComponent<Rigidbody2D>();
         }
 
         private void OnTriggerEnter2D(Collider2D triggeredObject)
         {
-            if (triggeredObject.name == "統神" || triggeredObject.name == "萊納")
+            if (triggeredObject.name == _tonsen ||
+                triggeredObject.name == _raina)
             {
                 StopMoving(triggeredObject);
             }
