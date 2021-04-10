@@ -4,9 +4,15 @@ namespace GameCore.Character
 {
     public class TonMove : MonoBehaviour
     {
+    #region Public Variables
+
+        [HideInInspector]
+        public bool currentFlipX;
+
+    #endregion
+
     #region Private Variables
 
-        private bool      _flipX;
         private Transform _transform;
 
         [SerializeField]
@@ -74,6 +80,7 @@ namespace GameCore.Character
                 SpriteRenderer.flipX = !faceRight;
             else if (horizontalValue < 0 && faceRight == GetFaceValue(-1))
                 SpriteRenderer.flipX = !faceRight;
+            currentFlipX = SpriteRenderer.flipX;
         }
 
         private void Update()

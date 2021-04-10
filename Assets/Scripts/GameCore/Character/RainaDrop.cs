@@ -1,3 +1,4 @@
+using UniRx;
 using UnityEngine;
 
 namespace GameCore.Character
@@ -6,10 +7,12 @@ namespace GameCore.Character
     {
     #region Private Variables
 
-        private          Rigidbody2D _rigidbody2D;
-        private readonly string      _raina  = "萊納";
-        private readonly string      _tonsen = "統神";
-        private          Vector2     zero;
+        private readonly string  _raina  = "萊納";
+        private readonly string  _tonsen = "統神";
+        private          Vector2 zero;
+
+        [SerializeField]
+        private SpriteRenderer _spriteRenderer;
 
     #endregion
 
@@ -17,8 +20,7 @@ namespace GameCore.Character
 
         private void Start()
         {
-            name         = _raina;
-            _rigidbody2D = GetComponent<Rigidbody2D>();
+            name = _raina;
         }
 
     #endregion
@@ -27,8 +29,7 @@ namespace GameCore.Character
 
         private void OnTriggerEnter2D(Collider2D triggeredObject)
         {
-            if (triggeredObject.name == _tonsen ||
-                triggeredObject.name == _raina)
+            if (triggeredObject.name == _tonsen)
                 StopMoving(triggeredObject);
         }
 
@@ -36,8 +37,18 @@ namespace GameCore.Character
 
     #region Private Methods
 
+        private void SetFlip(bool flip)
+        {
+            _spriteRenderer.flipX = flip;
+        }
+
         private void StopMoving(Collider2D triggeredObject)
         {
+            var tonMove = triggeredObject.GetComponent<TonMove>();
+            SetFlip(tonMove.currentFlipX);
+            tonMove.ObserveEveryValueChanged(move => move.currentFlipX)
+                   .Subscribe(flip => SetFlip(flip))
+                   .AddTo(gameObject).AddTo(triggeredObject.gameObject);
             transform.parent = triggeredObject.transform;
             GetComponent<TonMove>()?.StopMoving();
         }
