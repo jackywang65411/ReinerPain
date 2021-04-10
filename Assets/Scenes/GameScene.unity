@@ -339,6 +339,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 1635655136328283346, guid: 04ec0d45d9d84c844861434fec08a655, type: 3}
   eachSpawnTime: 1
+  _rainaDatas:
+  - {fileID: 11400000, guid: 8af107571dad5244a9f4c5184ebedb13, type: 2}
+  - {fileID: 11400000, guid: 4796849a40ab53a438bd9e6a6fc82d2d, type: 2}
+  - {fileID: 11400000, guid: bf20d17fdbc43cf4db35f08f067c4212, type: 2}
 --- !u!1 &781845377
 GameObject:
   m_ObjectHideFlags: 0

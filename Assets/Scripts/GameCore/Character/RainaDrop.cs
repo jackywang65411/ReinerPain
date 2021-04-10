@@ -1,3 +1,4 @@
+using GameCore.ScriptableObjects;
 using UniRx;
 using UnityEngine;
 
@@ -12,6 +13,15 @@ namespace GameCore.Character
         private          Vector2 zero;
 
         [SerializeField]
+        [Header("自動刪除自己的時間")]
+        private float _autoDestroyTime = 5f;
+
+        [SerializeField]
+        [Header("目前的資料，不用設定此處，預設為空，用來Debug")]
+        private RainaData _rainaData;
+
+        [SerializeField]
+        [Header("判定面向的SpriteRenderer")]
         private SpriteRenderer _spriteRenderer;
 
     #endregion
@@ -21,6 +31,7 @@ namespace GameCore.Character
         private void Start()
         {
             name = _raina;
+            Destroy(gameObject , _autoDestroyTime);
         }
 
     #endregion
@@ -31,6 +42,16 @@ namespace GameCore.Character
         {
             if (triggeredObject.name == _tonsen)
                 StopMoving(triggeredObject);
+        }
+
+    #endregion
+
+    #region Public Methods
+
+        public void SetData(RainaData rainaData)
+        {
+            _rainaData             = rainaData;
+            _spriteRenderer.sprite = rainaData.Sprite;
         }
 
     #endregion
