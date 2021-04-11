@@ -9,9 +9,15 @@ namespace GameCore.Character
     {
     #region Private Variables
 
-        private readonly string  _raina  = "萊納";
-        private readonly string  _tonsen = "統神";
-        private          Vector2 zero;
+        private bool isCatch;
+        private bool isDie;
+
+        private float h_WithShadow;
+
+        private readonly string    _raina  = "萊納";
+        private readonly string    _tonsen = "統神";
+        private          Transform _shadow;
+        private          Vector2   zero;
 
         [SerializeField]
         [Header("自動刪除自己的時間")]
@@ -22,16 +28,11 @@ namespace GameCore.Character
         private RainaData _rainaData;
 
         [SerializeField]
-        [Header("判定面向的SpriteRenderer")]
-        private SpriteRenderer _spriteRenderer;
-
-        [SerializeField]
         private Sprite _sprite;
 
-        private float     h_WithShadow;
-        private Transform _shadow;
-        private bool      isDie;
-        private bool      isCatch;
+        [SerializeField]
+        [Header("判定面向的SpriteRenderer")]
+        private SpriteRenderer _spriteRenderer;
 
     #endregion
 
@@ -44,6 +45,48 @@ namespace GameCore.Character
             Destroy(gameObject , _autoDestroyTime);
         }
 
+    #endregion
+
+    #region Events
+
+        private void OnTriggerStay2D(Collider2D triggeredObject)
+        {
+            if (isCatch || isDie)
+                return;
+
+            if (DetectCatch(triggeredObject))
+                StopMoving(triggeredObject);
+        }
+
+    #endregion
+
+    #region Public Methods
+
+        public void SetData(RainaData rainaData)
+        {
+            _rainaData             = rainaData;
+            _spriteRenderer.sprite = rainaData.Sprite;
+        }
+
+    #endregion
+
+    #region Private Methods
+
+        private bool DetectCatch(Collider2D triggeredObject)
+        {
+            var nameIsTonsen            = triggeredObject.name == _tonsen;
+            var distance                = Mathf.Abs(_spriteRenderer.transform.position.y - _shadow.position.y);
+            var matchDistance           = distance <= 1f;
+            var triggeredObjectPosition = triggeredObject.transform.position;
+
+            var distanceWithTriggerObject = Mathf.Abs(triggeredObjectPosition.y - _shadow.position.y);
+            var matchTriggerObject        = distanceWithTriggerObject <= 2.5f;
+
+            var isCatch = nameIsTonsen && matchDistance && matchTriggerObject;
+
+            return isCatch;
+        }
+
         private void RainaInit()
         {
             _shadow            =  transform.Find("Shadow");
@@ -51,15 +94,9 @@ namespace GameCore.Character
             _shadow.parent     =  null;
         }
 
-        private void Update()
+        private void SetFlip(bool flip)
         {
-            if (isCatch) return;
-            if (isDie) return;
-            if (_spriteRenderer.transform.position.y <= _shadow.position.y)
-            {
-                isDie = true;
-                SpawnRainaGround();
-            }
+            _spriteRenderer.flipX = flip;
         }
 
         private void SpawnRainaGround()
@@ -80,35 +117,6 @@ namespace GameCore.Character
             Destroy(_shadow.gameObject);
         }
 
-    #endregion
-
-    #region Events
-
-        private void OnTriggerEnter2D(Collider2D triggeredObject)
-        {
-            if (triggeredObject.name == _tonsen)
-                StopMoving(triggeredObject);
-        }
-
-    #endregion
-
-    #region Public Methods
-
-        public void SetData(RainaData rainaData)
-        {
-            _rainaData             = rainaData;
-            _spriteRenderer.sprite = rainaData.Sprite;
-        }
-
-    #endregion
-
-    #region Private Methods
-
-        private void SetFlip(bool flip)
-        {
-            _spriteRenderer.flipX = flip;
-        }
-
         private void StopMoving(Collider2D triggeredObject)
         {
             isCatch = true;
@@ -121,6 +129,18 @@ namespace GameCore.Character
             transform.parent = triggeredObject.transform;
             GetComponent<TonMove>()?.StopMoving();
             _spriteRenderer.DOFade(0 , 0.5f);
+            GetComponent<Collider2D>().enabled = false;
+        }
+
+        private void Update()
+        {
+            if (isCatch) return;
+            if (isDie) return;
+            if (_spriteRenderer.transform.position.y <= _shadow.position.y)
+            {
+                isDie = true;
+                SpawnRainaGround();
+            }
         }
 
     #endregion
