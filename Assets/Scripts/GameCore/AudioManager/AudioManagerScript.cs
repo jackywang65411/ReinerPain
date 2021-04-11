@@ -34,7 +34,7 @@ public class AudioManagerScript : MonoBehaviour
         audiosPack = this.GetComponent<AudiosPack>();
         audiosPack.SetAudioSourceDict(); //初始化字典
 
-        DontDestroyOnLoad(this); //跨場景物件
+        //DontDestroyOnLoad(this); //跨場景物件
     }
 
     //--------------------------------------------------------------------------------------------------------------
