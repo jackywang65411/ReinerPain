@@ -1,3 +1,5 @@
+using System;
+using UniRx;
 using UnityEngine;
 
 namespace GameCore.Character
@@ -14,6 +16,8 @@ namespace GameCore.Character
     #region Private Variables
 
         private Animator _animator;
+
+        private bool isDashing;
 
         private Transform _transform;
 
@@ -68,7 +72,8 @@ namespace GameCore.Character
 
         private void ControlMoving(float x , float y , float horizontalValue)
         {
-            _transform.position += new Vector3(x , y , 0) * Time.deltaTime;
+            if (isDashing) return;
+            Moving(x , y);
             if (CanControl == false) return;
             HandlerFlip(horizontalValue);
         }
@@ -87,6 +92,16 @@ namespace GameCore.Character
             return false;
         }
 
+        private void HandleDashing()
+        {
+            if (isDashing == false) return;
+            float x = currentFlipX ? -1 : 1;
+            x *= MoveSpeed_Horzontal;
+            Moving(x , 0);
+            Observable.Timer(TimeSpan.FromSeconds(0.5f))
+                      .Subscribe(_ => isDashing = false);
+        }
+
         private void HandlerFlip(float horizontalValue)
         {
             var faceRight = SpriteRenderer.flipX;
@@ -97,9 +112,19 @@ namespace GameCore.Character
             currentFlipX = SpriteRenderer.flipX;
         }
 
+        private bool IsDashKeyDown()
+        {
+            return Input.GetKeyDown(KeyCode.Space);
+        }
+
+        private void Moving(float x , float y)
+        {
+            _transform.position += new Vector3(x , y , 0) * Time.deltaTime;
+        }
+
         private void SetAnimation(float x , float y)
         {
-            if (CanControl == false)
+            if (CanControl == false || isDashing)
                 return;
             var animationName                   = "Idle";
             if (x != 0 || y != 0) animationName = "Move";
@@ -112,6 +137,13 @@ namespace GameCore.Character
             var verticalValue   = CanControl ? Input.GetAxisRaw("Vertical") : 1;
             var x               = horizontalValue * MoveSpeed_Horzontal;
             var y               = verticalValue * MoveSpeed_Vertical;
+            if (IsDashKeyDown() && CanControl)
+            {
+                isDashing = true;
+                _animator.Play("Dash");
+            }
+
+            HandleDashing();
             SetAnimation(x , y);
             ControlMoving(x , y , horizontalValue);
         }
