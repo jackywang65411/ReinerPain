@@ -1,4 +1,6 @@
 using DG.Tweening;
+using GameCore.GameMechanics;
+using GameCore.Manager;
 using GameCore.ScriptableObjects;
 using UniRx;
 using UnityEngine;
@@ -55,7 +57,7 @@ namespace GameCore.Character
                 return;
 
             if (DetectCatch(triggeredObject))
-                StopMoving(triggeredObject);
+                Catch(triggeredObject);
         }
 
     #endregion
@@ -72,6 +74,22 @@ namespace GameCore.Character
 
     #region Private Methods
 
+        private void Catch(Collider2D triggeredObject)
+        {
+            isCatch = true;
+            FindObjectOfType<GameSceneManager>().AddScore(_rainaData.Score);
+            if (_shadow) Destroy(_shadow.gameObject);
+            var tonMove = triggeredObject.GetComponent<TonMove>();
+            SetFlip(tonMove.currentFlipX);
+            tonMove.ObserveEveryValueChanged(move => move.currentFlipX)
+                   .Subscribe(flip => SetFlip(flip))
+                   .AddTo(gameObject).AddTo(triggeredObject.gameObject);
+            transform.parent = triggeredObject.transform;
+            GetComponent<TonMove>()?.StopMoving();
+            _spriteRenderer.DOFade(0 , 0.5f);
+            GetComponent<Collider2D>().enabled = false;
+        }
+
         private bool DetectCatch(Collider2D triggeredObject)
         {
             var nameIsTonsen            = triggeredObject.name == _tonsen;
@@ -85,6 +103,12 @@ namespace GameCore.Character
             var isCatch = nameIsTonsen && matchDistance && matchTriggerObject;
 
             return isCatch;
+        }
+
+        private void DoGameOver()
+        {
+            FindObjectOfType<SpawnManager>().Stop();
+            FindObjectOfType<GameSceneManager>().LoadEndingScene();
         }
 
         private void RainaInit()
@@ -117,21 +141,6 @@ namespace GameCore.Character
             Destroy(_shadow.gameObject);
         }
 
-        private void StopMoving(Collider2D triggeredObject)
-        {
-            isCatch = true;
-            if (_shadow) Destroy(_shadow.gameObject);
-            var tonMove = triggeredObject.GetComponent<TonMove>();
-            SetFlip(tonMove.currentFlipX);
-            tonMove.ObserveEveryValueChanged(move => move.currentFlipX)
-                   .Subscribe(flip => SetFlip(flip))
-                   .AddTo(gameObject).AddTo(triggeredObject.gameObject);
-            transform.parent = triggeredObject.transform;
-            GetComponent<TonMove>()?.StopMoving();
-            _spriteRenderer.DOFade(0 , 0.5f);
-            GetComponent<Collider2D>().enabled = false;
-        }
-
         private void Update()
         {
             if (isCatch) return;
@@ -139,7 +148,9 @@ namespace GameCore.Character
             if (_spriteRenderer.transform.position.y <= _shadow.position.y)
             {
                 isDie = true;
+                var currentHp = ScoreSystem.HpIs(-1);
                 SpawnRainaGround();
+                if (currentHp <= 0) DoGameOver();
             }
         }
 
