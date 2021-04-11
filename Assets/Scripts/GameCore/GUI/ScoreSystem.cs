@@ -6,30 +6,19 @@ using UnityEngine;
 public class ScoreSystem : MonoBehaviour , IGUI
 {
     int _Score;
-    int _HighScore;
     int _ReinerHealth;
     
-    public ScoreSystem(int score,int highscore)
+    public ScoreSystem(int value)
     {
-        _Score = score;
-        _HighScore = highscore;
+        _Score = value;
     }
     public int GetScore
     {
         get { return _Score; }
     }
-    public int AddScore
-    {
-        set { _Score = value; }
-    }
     public int ResetScore
     {
         set { _Score = 0; }
-    }
-    public int HighScore
-    {
-        get { return _HighScore; }
-        set { _HighScore = value; }
     }
     public int Health
     {
@@ -37,13 +26,17 @@ public class ScoreSystem : MonoBehaviour , IGUI
         set { _ReinerHealth = value; }
     }
 
+    public void AddScore(int AddNewScore)
+    {
+        _Score += AddNewScore;
+    }
+
 }
 
 interface IGUI
 {
     int GetScore { get; }
-    int AddScore { set; }
-    int HighScore { get; set; }
-
+    int ResetScore { set; }
     int Health { get; set; }
+
 }
