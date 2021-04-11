@@ -196,7 +196,7 @@ MonoBehaviour:
   CanControl: 0
   DefaultFaceRight: 1
   MoveSpeed_Horzontal: 0
-  MoveSpeed_Vertical: -8
+  MoveSpeed_Vertical: -9
   SpriteRenderer: {fileID: 0}
 --- !u!1001 &1686014946080985142
 PrefabInstance:

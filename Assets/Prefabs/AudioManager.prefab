@@ -98,7 +98,7 @@ MonoBehaviour:
     clips:
     - {fileID: 8300000, guid: ae0479a388ed64646bad51c4804f8d9c, type: 3}
     tag: []
-    volumeScale: 0.8
+    volumeScale: 0.4
     overlappingMode: 0
     outputSourceNum: 1
   - name: yelling
