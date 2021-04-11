@@ -46,8 +46,9 @@ namespace GameCore.Character
 
         private void RainaInit()
         {
-            _shadow        = transform.Find("Shadow");
-            _shadow.parent = null;
+            _shadow            =  transform.Find("Shadow");
+            transform.position += (transform.position.y - _shadow.position.y) * Vector3.up;
+            _shadow.parent     =  null;
         }
 
         private void Update()
@@ -71,6 +72,7 @@ namespace GameCore.Character
             _spriteRenderer.DOFade(0 , 0.5f);
             rainaGround.transform.position = _shadow.position;
             var spriteRenderer = rainaGround.AddComponent<SpriteRenderer>();
+            spriteRenderer.sortingOrder      = -1;
             spriteRenderer.sprite            = _rainaData.Sprite_Ground;
             rainaGround.transform.localScale = Vector3.zero;
             rainaGround.transform.DOScale(Vector3.one , 1)
@@ -110,6 +112,7 @@ namespace GameCore.Character
         private void StopMoving(Collider2D triggeredObject)
         {
             isCatch = true;
+            if (_shadow) Destroy(_shadow.gameObject);
             var tonMove = triggeredObject.GetComponent<TonMove>();
             SetFlip(tonMove.currentFlipX);
             tonMove.ObserveEveryValueChanged(move => move.currentFlipX)
@@ -117,6 +120,7 @@ namespace GameCore.Character
                    .AddTo(gameObject).AddTo(triggeredObject.gameObject);
             transform.parent = triggeredObject.transform;
             GetComponent<TonMove>()?.StopMoving();
+            _spriteRenderer.DOFade(0 , 0.5f);
         }
 
     #endregion
