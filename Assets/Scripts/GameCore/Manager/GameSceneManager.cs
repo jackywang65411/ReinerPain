@@ -21,6 +21,7 @@ namespace GameCore.Manager
 
         private void Start()
         {
+            ScoreSystem.Reset();
             SceneManager.sceneLoaded += (scene , mode) => OnSceneLoaded(scene);
         }
 
