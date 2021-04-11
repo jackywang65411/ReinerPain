@@ -15,15 +15,21 @@ namespace GameCore.GameMechanics
     #region Private Variables
 
         [SerializeField]
-        [Header("多久產生一次物件")]
-        private float eachSpawnTime;
+        [Header("Log產生時間與細節")]
+        private bool UseLog;
 
         [SerializeField]
         [Header("將被產生的物件")]
         private GameObject prefab;
 
         [SerializeField]
+        private int _currentSpawnCount;
+
+        [SerializeField]
         private List<RainaData> _rainaDatas = new List<RainaData>();
+
+        [SerializeField]
+        private SpawnManagerData _spawnManagerData;
 
     #endregion
 
@@ -31,15 +37,28 @@ namespace GameCore.GameMechanics
 
         private void Start()
         {
-            var spawnTime = TimeSpan.FromSeconds(eachSpawnTime);
-            Observable.Timer(spawnTime , spawnTime)
-                      .Subscribe(_ => SpawnObject())
-                      .AddTo(gameObject);
+            var firstRainaSpawnTime = _spawnManagerData.FirstRainaSpawnTime;
+            SpawnTimer(firstRainaSpawnTime);
         }
 
     #endregion
 
     #region Private Methods
+
+        private void SpawnComplete()
+        {
+            var countRatio = (float)_currentSpawnCount / _spawnManagerData.MaxRainaCount;
+            var ratio      = Mathf.Min(countRatio , 1);
+            var y          = _spawnManagerData.Curve.Evaluate(ratio);
+            var nextTime   = y * _spawnManagerData.CurveMaxTime;
+            if (UseLog)
+                Debug.Log($"SpawnComplete , currentCount: {_currentSpawnCount}" +
+                          $" countRatio : {countRatio} " +
+                          $" ratio : {ratio} nextTime: {nextTime}");
+
+            SpawnTimer(nextTime);
+            _currentSpawnCount++;
+        }
 
         private void SpawnObject()
         {
@@ -55,6 +74,14 @@ namespace GameCore.GameMechanics
             var rainaDrop = instance.GetComponent<RainaDrop>();
             Assert.IsNotNull(rainaDrop);
             rainaDrop.SetData(randomRainaData);
+        }
+
+        private void SpawnTimer(float firstRainaSpawnTime)
+        {
+            var spawnTime = TimeSpan.FromSeconds(firstRainaSpawnTime);
+            Observable.Timer(spawnTime)
+                      .Subscribe(_ => SpawnObject() , SpawnComplete)
+                      .AddTo(gameObject);
         }
 
     #endregion

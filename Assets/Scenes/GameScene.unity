@@ -295,8 +295,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d78e2b7a0c90425ba91031c89513477a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eachSpawnTime: 1
   prefab: {fileID: 1635655136328283346, guid: 04ec0d45d9d84c844861434fec08a655, type: 3}
+  _spawnManagerData: {fileID: 11400000, guid: cf7bca4f66e2dd648bd2aa780347d36f, type: 2}
   _rainaDatas:
   - {fileID: 11400000, guid: 8af107571dad5244a9f4c5184ebedb13, type: 2}
   - {fileID: 11400000, guid: 4796849a40ab53a438bd9e6a6fc82d2d, type: 2}
@@ -639,8 +639,8 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!60 &2066662904
-PolygonCollider2D:
+--- !u!61 &2066662904
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -649,7 +649,7 @@ PolygonCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -662,12 +662,9 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 7.646464, y: -1.12683}
-      - {x: -6.9575634, y: -0.8498557}
-      - {x: -6.9970574, y: -5.8076377}
-      - {x: 7.787631, y: -5.5273376}
+  serializedVersion: 2
+  m_Size: {x: 13.39, y: 4}
+  m_EdgeRadius: 0
 --- !u!4 &2066662905
 Transform:
   m_ObjectHideFlags: 0
@@ -676,7 +673,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2066662903}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.7143062, y: 3.0361576, z: 0.68421507}
+  m_LocalPosition: {x: -1.7143062, y: -0.5, z: 0.68421507}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1646736633}
@@ -817,6 +814,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Backgrounds
+      objectReference: {fileID: 0}
+    - target: {fileID: 6340861524264258891, guid: 28ab3c5e71c0fc441ba986daa1f6c6a7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28ab3c5e71c0fc441ba986daa1f6c6a7, type: 3}
