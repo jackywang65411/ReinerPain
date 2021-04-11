@@ -15,24 +15,16 @@ namespace GameCore.Manager
 
     #endregion
 
-    #region Unity events
-
-        private void Start()
-        {
-            var restart       = EndingManager.Instance.transform.Find("Restart Button").gameObject;
-            var restartButton = restart.GetComponent<Button>();
-            restartButton.OnClickAsObservable()
-                         .Subscribe(_ => Restart());
-        }
-
-    #endregion
-
     #region Public Methods
 
         public void LoadEndingScene(int score)
         {
             SceneManager.LoadScene("EndingScene" , LoadSceneMode.Additive);
             EndingManager.Instance.ShowEnding(score);
+            var restart       = EndingManager.Instance.transform.Find("Restart Button").gameObject;
+            var restartButton = restart.GetComponent<Button>();
+            restartButton.OnClickAsObservable()
+                         .Subscribe(_ => Restart());
         }
 
     #endregion
