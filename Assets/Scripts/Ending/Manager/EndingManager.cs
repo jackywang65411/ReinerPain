@@ -9,10 +9,13 @@ public class EndingManager : MonoBehaviour
     public static EndingManager Instance { get { return _instance; } }
 
     [SerializeField] private Slider sld;
+    [SerializeField] private Text scoreLabel;
     [SerializeField] private float sliderValue;
     [SerializeField] private Animator anim;
     [SerializeField] private bool updatingSlider;
     [SerializeField] private int scoreTop;
+    [SerializeField] private List<GameObject> endingGroup;
+    [SerializeField] private LineCreator lineCreator;
 
     void Awake()
     {
@@ -24,7 +27,7 @@ public class EndingManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F1))
         {
-
+            ShowEnding(500);
         }
 
         if (updatingSlider)
@@ -39,30 +42,36 @@ public class EndingManager : MonoBehaviour
     /// <param name="score">分數</param>
     public void ShowEnding(int score)
     {
-        if (anim == null) anim = this.GetComponent<Animator>();
-
-        EndingProccess(score, () =>
-        {
-            anim.SetTrigger("playEnding");
-        });
-
+        StartCoroutine(Cor_ShowEnding(score));
     }
 
-    private void EndingProccess(int score, System.Action body)
+    private IEnumerator Cor_ShowEnding(int score)
     {
+        if (anim == null) anim = this.GetComponent<Animator>();
         if (sld == null) sld = this.GetComponentInChildren<Slider>();
 
         scoreTop = score;
+        scoreLabel.text = score.ToString();
         updatingSlider = true;
+        sld.value = 0;
 
-        body.Invoke();
+        for (int i = endingGroup.Count - 1; i >= 0; i--)
+        {
+            bool _onOff = score >= lineCreator.scoreStandard[i];
+            endingGroup[i].SetActive(_onOff);
 
-        //scoreTop = 0;
-        //updatingSlider = false;
+            if (_onOff)
+                break;
+        }
+
+        anim.SetTrigger("playEnding");
+        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1);
+
+        Debug.Log("Test");
     }
 
     private void UpdateSliderValue()
     {
-        sld.value = sliderValue * ( scoreTop / sld.maxValue );
+        sld.value = sliderValue * scoreTop;
     }
 }
