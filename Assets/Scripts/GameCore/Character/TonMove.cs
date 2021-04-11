@@ -142,6 +142,7 @@ namespace GameCore.Character
             {
                 isDashing = true;
                 _animator.Play("Dash");
+                AudioManagerScript.Instance.PlayAudioClip("Dash");
                 Observable.Timer(TimeSpan.FromSeconds(0.15f))
                           .Subscribe(_ => isDashing = false);
             }

@@ -111,6 +111,14 @@ MonoBehaviour:
     volumeScale: 0.8
     overlappingMode: 0
     outputSourceNum: 1
+  - name: Dash
+    clips:
+    - {fileID: 8300000, guid: a4e798529b42c4b4e8e1423c986f8a45, type: 3}
+    - {fileID: 8300000, guid: 18775cd896623574fb05f9cc87069d07, type: 3}
+    tag: []
+    volumeScale: 0.15
+    overlappingMode: 0
+    outputSourceNum: 1
   audioSourcesPack:
   - name: BGM
     source: {fileID: 6281269191426089411}
