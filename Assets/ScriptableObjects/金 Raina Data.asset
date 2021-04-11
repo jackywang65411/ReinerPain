@@ -15,4 +15,5 @@ MonoBehaviour:
   MoveSpeedDecrease: 50
   Score: 10
   Sprite: {fileID: 21300000, guid: a3697faebd1205649ab7f9acf921bace, type: 3}
+  Sprite_Ground: {fileID: 21300000, guid: fb045909cc487e848b920f2a11796f57, type: 3}
   Name: "\u91D1"

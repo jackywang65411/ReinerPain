@@ -24,6 +24,14 @@ namespace GameCore.Character
         [Header("判定面向的SpriteRenderer")]
         private SpriteRenderer _spriteRenderer;
 
+        [SerializeField]
+        private Sprite _sprite;
+
+        private float     h_WithShadow;
+        private Transform _shadow;
+        private bool      isDie;
+        private bool      isCatch;
+
     #endregion
 
     #region Unity events
@@ -31,7 +39,34 @@ namespace GameCore.Character
         private void Start()
         {
             name = _raina;
+            RainaInit();
             Destroy(gameObject , _autoDestroyTime);
+        }
+
+        private void RainaInit()
+        {
+            _shadow        = transform.Find("Shadow");
+            _shadow.parent = null;
+        }
+
+        private void Update()
+        {
+            if (isCatch) return;
+            if (isDie) return;
+            if (_spriteRenderer.transform.position.y <= _shadow.position.y)
+            {
+                isDie = true;
+                SpawnRainaGround();
+            }
+        }
+
+        private void SpawnRainaGround()
+        {
+            var rainaGround = new GameObject("RainaGround");
+            rainaGround.transform.position = _shadow.position;
+            var spriteRenderer = rainaGround.AddComponent<SpriteRenderer>();
+            spriteRenderer.sprite = _rainaData.Sprite_Ground;
+            Destroy(gameObject);
         }
 
     #endregion
@@ -65,6 +100,7 @@ namespace GameCore.Character
 
         private void StopMoving(Collider2D triggeredObject)
         {
+            isCatch = true;
             var tonMove = triggeredObject.GetComponent<TonMove>();
             SetFlip(tonMove.currentFlipX);
             tonMove.ObserveEveryValueChanged(move => move.currentFlipX)
