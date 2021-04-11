@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "\u91D1 Raina Data"
   m_EditorClassIdentifier: 
   MoveSpeedDecrease: 50
-  Score: 10
+  Score: 15
   Sprite: {fileID: 21300000, guid: a3697faebd1205649ab7f9acf921bace, type: 3}
   Sprite_Ground: {fileID: 21300000, guid: 36f0b88e2f9545f499ccc54109e5b36b, type: 3}
   Name: "\u91D1"
