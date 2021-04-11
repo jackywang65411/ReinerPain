@@ -36,6 +36,9 @@ public class EndingManager : MonoBehaviour
     [SerializeField]
     private LineCreator lineCreator;
 
+    [SerializeField]
+    private Button restartButton;
+
     void Awake()
     {
         if (_instance == null)
@@ -73,6 +76,7 @@ public class EndingManager : MonoBehaviour
         scoreLabel.text = score.ToString();
         updatingSlider  = true;
         sld.value       = 0;
+        restartButton.gameObject.SetActive(false);
 
         for (int i = endingGroup.Count - 1 ; i >= 0 ; i--)
         {
@@ -86,7 +90,8 @@ public class EndingManager : MonoBehaviour
         anim.SetTrigger("playEnding");
         yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1);
 
-        Debug.Log("Test");
+        updatingSlider = false; 
+        restartButton.gameObject.SetActive(true);
     }
 
     private void UpdateSliderValue()
