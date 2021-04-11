@@ -2,21 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HighScoreSystem : MonoBehaviour , IScore
+
+public class ScoreSystem : MonoBehaviour , IGUI
 {
     int _Score;
     int _HighScore;
     int _ReinerHealth;
-
-    public HighScoreSystem(int score,int highscore)
+    
+    public ScoreSystem(int score,int highscore)
     {
         _Score = score;
         _HighScore = highscore;
     }
-    public int Score
+    public int GetScore
     {
         get { return _Score; }
+    }
+    public int AddScore
+    {
         set { _Score = value; }
+    }
+    public int ResetScore
+    {
+        set { _Score = 0; }
     }
     public int HighScore
     {
@@ -28,11 +36,13 @@ public class HighScoreSystem : MonoBehaviour , IScore
         get { return _ReinerHealth; }
         set { _ReinerHealth = value; }
     }
+
 }
 
-interface IScore
+interface IGUI
 {
-    int Score { get; set; }
+    int GetScore { get; }
+    int AddScore { set; }
     int HighScore { get; set; }
 
     int Health { get; set; }
