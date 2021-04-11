@@ -44,14 +44,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UseLog: 0
+  _rainaBound: {fileID: 7587590849487376255}
   prefab: {fileID: 1635655136328283346, guid: 04ec0d45d9d84c844861434fec08a655, type: 3}
+  _currentSpawnCount: 0
   _rainaDatas:
   - {fileID: 11400000, guid: 8af107571dad5244a9f4c5184ebedb13, type: 2}
   - {fileID: 11400000, guid: 4796849a40ab53a438bd9e6a6fc82d2d, type: 2}
   - {fileID: 11400000, guid: bf20d17fdbc43cf4db35f08f067c4212, type: 2}
+  - {fileID: 11400000, guid: 7a3cb868b0b2de442b287ac90a9c43e1, type: 2}
+  - {fileID: 11400000, guid: 7a3cb868b0b2de442b287ac90a9c43e1, type: 2}
   _spawnManagerData: {fileID: 11400000, guid: cf7bca4f66e2dd648bd2aa780347d36f, type: 2}
-  _rainaBound: {fileID: 7587590849487376255}
-  _currentSpawnCount: 0
 --- !u!1 &7587590849264580905
 GameObject:
   m_ObjectHideFlags: 0
