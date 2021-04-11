@@ -77,7 +77,12 @@ namespace GameCore.GameMechanics
         private void PlaySpawnAudio()
         {
             var playAudio = RandomUtilities.GetRandomResult(20 , 100);
-            if (playAudio) AudioManagerScript.Instance.PlayAudioClip("come");
+            if (playAudio)
+            {
+                var value = Random.Range(0 , 1);
+                if (value == 0) AudioManagerScript.Instance.PlayAudioClip("come");
+                else AudioManagerScript.Instance.PlayAudioClip("shuu");
+            }
         }
 
         private void SpawnComplete()

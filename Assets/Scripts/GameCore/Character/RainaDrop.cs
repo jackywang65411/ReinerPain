@@ -107,6 +107,7 @@ namespace GameCore.Character
 
         private void DoGameOver()
         {
+            AudioManagerScript.Instance.PlayAudioClip("yelling");
             FindObjectOfType<SpawnManager>().Stop();
             FindObjectOfType<GameSceneManager>().LoadEndingScene();
         }
@@ -148,7 +149,7 @@ namespace GameCore.Character
             if (_spriteRenderer.transform.position.y <= _shadow.position.y)
             {
                 isDie = true;
-
+                AudioManagerScript.Instance.PlayAudioClip("oh_shit");
                 var currentHp = ScoreSystem.HpIs(-1);
                 SpawnRainaGround();
                 if (currentHp <= 0) DoGameOver();

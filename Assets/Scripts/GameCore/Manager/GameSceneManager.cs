@@ -23,6 +23,7 @@ namespace GameCore.Manager
         {
             ScoreSystem.Reset();
             SceneManager.sceneLoaded += (scene , mode) => OnSceneLoaded(scene);
+            AudioManagerScript.Instance.PlayAudioClip("song");
         }
 
     #endregion
