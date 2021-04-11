@@ -77,6 +77,7 @@ namespace GameCore.Character
         private void Catch(Collider2D triggeredObject)
         {
             isCatch = true;
+            AudioManagerScript.Instance.PlayAudioClip("catch");
             FindObjectOfType<GameSceneManager>().AddScore(_rainaData.Score);
             if (_shadow) Destroy(_shadow.gameObject);
             var tonMove = triggeredObject.GetComponent<TonMove>();
