@@ -148,10 +148,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d7e185483a540c6b9e9305e26f01ad7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentFlipX: 0
   CanControl: 1
   DefaultFaceRight: 1
-  MoveSpeed_Horzontal: 10
-  MoveSpeed_Vertical: 6
+  MoveSpeed_Horzontal: 12
+  MoveSpeed_Vertical: 8
   SpriteRenderer: {fileID: 6248121705307566582}
 --- !u!61 &6248121706257659984
 BoxCollider2D:
