@@ -71,6 +71,7 @@ namespace GameCore.Manager
 
         private void Restart()
         {
+            ScoreSystem.Reset();
             SceneManager.UnloadSceneAsync("EndingScene");
             SceneManager.UnloadSceneAsync("GUI");
             SceneManager.LoadScene("GameScene");

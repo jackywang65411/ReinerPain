@@ -51,6 +51,15 @@ namespace GameCore.GameMechanics
 
     #endregion
 
+    #region Public Methods
+
+        public void Stop()
+        {
+            Destroy(gameObject);
+        }
+
+    #endregion
+
     #region Private Methods
 
         private Vector3 GetSpawnPosition()
