@@ -47,9 +47,66 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clipsPack:
-  - name: test
+  - name: song
     clips:
-    - {fileID: 8300000, guid: 28a177adbda870b4888171a97d0ca089, type: 3}
+    - {fileID: 8300000, guid: 5e09dd96f7e20404ab43c6190403a2f8, type: 3}
+    tag: []
+    volumeScale: 0.1
+    overlappingMode: 0
+    outputSourceNum: 0
+  - name: reiner_seat_down
+    clips:
+    - {fileID: 8300000, guid: 4867d252d528c9243b3de8768495a29c, type: 3}
+    tag: []
+    volumeScale: 1.5
+    overlappingMode: 0
+    outputSourceNum: 1
+  - name: garbage_bye
+    clips:
+    - {fileID: 8300000, guid: 97853c9057dd7f549998a4fd895a6805, type: 3}
+    tag: []
+    volumeScale: 0.8
+    overlappingMode: 0
+    outputSourceNum: 1
+  - name: come
+    clips:
+    - {fileID: 8300000, guid: 639e94dad250cd443a043600f440a8f1, type: 3}
+    tag: []
+    volumeScale: 0.8
+    overlappingMode: 0
+    outputSourceNum: 1
+  - name: catch
+    clips:
+    - {fileID: 8300000, guid: 6d44d971823af8443be2b38699d3c9bb, type: 3}
+    - {fileID: 8300000, guid: 6b77a8d18acb3364eb2e24ec8bd244ae, type: 3}
+    - {fileID: 8300000, guid: aecdf85bec945234aa757295bd691119, type: 3}
+    - {fileID: 8300000, guid: c459d3302c4d07d4bb2579405132d9bf, type: 3}
+    - {fileID: 8300000, guid: eb21f787ec45df541a0ee8026931c0d9, type: 3}
+    tag: []
+    volumeScale: 0.8
+    overlappingMode: 0
+    outputSourceNum: 1
+  - name: oh_shit
+    clips:
+    - {fileID: 8300000, guid: 3b55ff0dcc1cd85409cd921debb0e162, type: 3}
+    - {fileID: 8300000, guid: 1050d298ae49ede4692794f1a257fb3d, type: 3}
+    tag: []
+    volumeScale: 0.8
+    overlappingMode: 0
+    outputSourceNum: 1
+  - name: shuu
+    clips:
+    - {fileID: 8300000, guid: ae0479a388ed64646bad51c4804f8d9c, type: 3}
+    tag: []
+    volumeScale: 0.8
+    overlappingMode: 0
+    outputSourceNum: 1
+  - name: yelling
+    clips:
+    - {fileID: 8300000, guid: a8b0465ce333df14abf4b6f389c9f54a, type: 3}
+    - {fileID: 8300000, guid: 204d2e58dafc1b245bfcc6999b85dc1b, type: 3}
+    - {fileID: 8300000, guid: 266025806fcd5a14bbdc0061cd623594, type: 3}
+    - {fileID: 8300000, guid: 550312057c5fa764b98961cd607eb411, type: 3}
     tag: []
     volumeScale: 0.8
     overlappingMode: 0
