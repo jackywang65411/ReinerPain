@@ -21,6 +21,8 @@ namespace GameCore.Character
 
         private Transform _transform;
 
+        private Vector2 _lastMovinVector;
+
         [SerializeField]
         [Header("是否能控制，若不能則自動移動")]
         private bool CanControl;
@@ -73,6 +75,7 @@ namespace GameCore.Character
         private void ControlMoving(float x , float y , float horizontalValue)
         {
             if (isDashing) return;
+            _lastMovinVector = new Vector2(x , y);
             Moving(x , y);
             if (CanControl == false) return;
             HandlerFlip(horizontalValue);
@@ -97,9 +100,8 @@ namespace GameCore.Character
             if (isDashing == false) return;
             float x = currentFlipX ? -1 : 1;
             x *= MoveSpeed_Horzontal;
-            Moving(x , 0);
-            Observable.Timer(TimeSpan.FromSeconds(0.5f))
-                      .Subscribe(_ => isDashing = false);
+            var y = _lastMovinVector.y;
+            Moving(x , y);
         }
 
         private void HandlerFlip(float horizontalValue)
@@ -137,10 +139,12 @@ namespace GameCore.Character
             var verticalValue   = CanControl ? Input.GetAxisRaw("Vertical") : 1;
             var x               = horizontalValue * MoveSpeed_Horzontal;
             var y               = verticalValue * MoveSpeed_Vertical;
-            if (IsDashKeyDown() && CanControl)
+            if (IsDashKeyDown() && isDashing == false && CanControl)
             {
                 isDashing = true;
                 _animator.Play("Dash");
+                Observable.Timer(TimeSpan.FromSeconds(0.5f))
+                          .Subscribe(_ => isDashing = false);
             }
 
             HandleDashing();
