@@ -79,8 +79,8 @@ namespace GameCore.GameMechanics
             var playAudio = RandomUtilities.GetRandomResult(20 , 100);
             if (playAudio)
             {
-                var value = Random.Range(0 , 1);
-                if (value == 0) AudioManagerScript.Instance.PlayAudioClip("come");
+                var isCome = RandomUtilities.GetRandomResult(70 , 100);
+                if (isCome) AudioManagerScript.Instance.PlayAudioClip("come");
                 else AudioManagerScript.Instance.PlayAudioClip("shuu");
             }
         }
