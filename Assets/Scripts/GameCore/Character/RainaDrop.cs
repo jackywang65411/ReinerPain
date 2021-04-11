@@ -95,11 +95,11 @@ namespace GameCore.Character
         {
             var nameIsTonsen            = triggeredObject.name == _tonsen;
             var distance                = Mathf.Abs(_spriteRenderer.transform.position.y - _shadow.position.y);
-            var matchDistance           = distance <= 1f;
+            var matchDistance           = distance <= 1.5f;
             var triggeredObjectPosition = triggeredObject.transform.position;
 
             var distanceWithTriggerObject = Mathf.Abs(triggeredObjectPosition.y - _shadow.position.y);
-            var matchTriggerObject        = distanceWithTriggerObject <= 2.5f;
+            var matchTriggerObject        = distanceWithTriggerObject <= 3.5f;
 
             var isCatch = nameIsTonsen && matchDistance && matchTriggerObject;
 
