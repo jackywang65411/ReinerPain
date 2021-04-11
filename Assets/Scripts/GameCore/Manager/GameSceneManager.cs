@@ -19,11 +19,20 @@ namespace GameCore.Manager
 
         private void Start()
         {
-            EndingManager.Instance.ShowEnding(1000);
             var restart       = EndingManager.Instance.transform.Find("Restart Button").gameObject;
             var restartButton = restart.GetComponent<Button>();
             restartButton.OnClickAsObservable()
                          .Subscribe(_ => Restart());
+        }
+
+    #endregion
+
+    #region Public Methods
+
+        public void LoadEndingScene(int score)
+        {
+            SceneManager.LoadScene("EndingScene" , LoadSceneMode.Additive);
+            EndingManager.Instance.ShowEnding(score);
         }
 
     #endregion
@@ -33,7 +42,6 @@ namespace GameCore.Manager
         private void Awake()
         {
             SceneManager.LoadScene("GUI" , LoadSceneMode.Additive);
-            // SceneManager.LoadScene("EndingScene" , LoadSceneMode.Additive);
         }
 
         private void Restart()
