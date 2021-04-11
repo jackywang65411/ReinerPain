@@ -3058,6 +3058,7 @@ MonoBehaviour:
   - {fileID: 1239748791}
   - {fileID: 1556334406}
   lineCreator: {fileID: 1181460671}
+  restartButton: {fileID: 1581453330}
 --- !u!1 &2101576765
 GameObject:
   m_ObjectHideFlags: 0
