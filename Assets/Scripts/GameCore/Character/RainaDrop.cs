@@ -78,7 +78,12 @@ namespace GameCore.Character
         {
             isCatch = true;
             AudioManagerScript.Instance.PlayAudioClip("catch");
-            FindObjectOfType<GameSceneManager>().AddScore(_rainaData.Score);
+            var score     = _rainaData.Score;
+            var textColor = _rainaData.ScoreTextColor;
+            FindObjectOfType<GameSceneManager>().AddScore(score);
+            var scoreString = $"+{score}";
+            FindObjectOfType<ScoreTextManager>().SpawnText(_shadow.position + Vector3.up * 2
+                , textColor , scoreString);
             if (_shadow) Destroy(_shadow.gameObject);
             var tonMove = triggeredObject.GetComponent<TonMove>();
             SetFlip(tonMove.currentFlipX);

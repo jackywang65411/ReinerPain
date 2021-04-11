@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c8af062eef44e1890b5987c696b29b8, type: 3}
   m_Name: "\u9280 Raina Data"
   m_EditorClassIdentifier: 
-  MoveSpeedDecrease: 30
   Score: 10
   Sprite: {fileID: 21300000, guid: dac6758e3ee378f4eadadce322f3980c, type: 3}
   Sprite_Ground: {fileID: 21300000, guid: 0eb844fbe70c662408059c79a56fa36a, type: 3}
-  Name: "\u9280"
+  ScoreTextColor: {r: 0.6431373, g: 0.7137255, b: 0.7294118, a: 1}
