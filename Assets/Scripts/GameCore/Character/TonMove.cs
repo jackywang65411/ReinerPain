@@ -116,7 +116,7 @@ namespace GameCore.Character
 
         private bool IsDashKeyDown()
         {
-            return Input.GetKeyDown(KeyCode.Space);
+            return Input.GetButtonDown("Jump");
         }
 
         private void Moving(float x , float y)
