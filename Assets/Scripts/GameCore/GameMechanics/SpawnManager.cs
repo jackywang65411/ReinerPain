@@ -19,8 +19,16 @@ namespace GameCore.GameMechanics
         private bool UseLog;
 
         [SerializeField]
+        [Header("萊納邊界")]
+        private BoxCollider2D _rainaBound;
+
+        [SerializeField]
         [Header("將被產生的物件")]
         private GameObject prefab;
+
+        [SerializeField]
+        [Header("目前產生的數量")]
+        private int _currentSpawnCount;
 
 
         [SerializeField]
@@ -30,14 +38,6 @@ namespace GameCore.GameMechanics
         [SerializeField]
         [Header("產生器資料")]
         private SpawnManagerData _spawnManagerData;
-
-        [SerializeField]
-        [Header("萊納邊界")]
-        private BoxCollider2D _rainaBound;
-
-        [SerializeField]
-        [Header("目前產生的數量")]
-        private int _currentSpawnCount;
 
     #endregion
 
@@ -52,6 +52,24 @@ namespace GameCore.GameMechanics
     #endregion
 
     #region Private Methods
+
+        private Vector3 GetSpawnPosition()
+        {
+            var bounds = _rainaBound.bounds;
+            var maxX   = bounds.max.x;
+            var minX   = bounds.min.x;
+            var maxY   = bounds.max.y;
+            var minY   = bounds.min.y;
+            var x      = Random.Range(minX , maxX);
+            var y      = Random.Range(minY , maxY);
+            return new Vector3(x , y , 0);
+        }
+
+        private void PlaySpawnAudio()
+        {
+            var playAudio = RandomUtilities.GetRandomResult(20 , 100);
+            if (playAudio) AudioManagerScript.Instance.PlayAudioClip("come");
+        }
 
         private void SpawnComplete()
         {
@@ -75,23 +93,12 @@ namespace GameCore.GameMechanics
             Assert.IsTrue(dataCount >= 1);
             var randomRainaData = RandomUtilities.GetRandomData(_rainaDatas);
 
+            PlaySpawnAudio();
             var instance = Instantiate(prefab , GetSpawnPosition() , Quaternion.identity
                 , transform);
             var rainaDrop = instance.GetComponent<RainaDrop>();
             Assert.IsNotNull(rainaDrop);
             rainaDrop.SetData(randomRainaData);
-        }
-
-        private Vector3 GetSpawnPosition()
-        {
-            var bounds = _rainaBound.bounds;
-            var maxX   = bounds.max.x;
-            var minX   = bounds.min.x;
-            var maxY   = bounds.max.y;
-            var minY   = bounds.min.y;
-            var x      = Random.Range(minX , maxX);
-            var y      = Random.Range(minY , maxY);
-            return new Vector3(x , y , 0);
         }
 
         private void SpawnTimer(float firstRainaSpawnTime)
