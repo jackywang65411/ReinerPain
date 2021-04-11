@@ -1,3 +1,4 @@
+using DG.Tweening;
 using GameCore.ScriptableObjects;
 using UniRx;
 using UnityEngine;
@@ -63,10 +64,18 @@ namespace GameCore.Character
         private void SpawnRainaGround()
         {
             var rainaGround = new GameObject("RainaGround");
+            GetComponent<TonMove>()?.StopMoving();
+            _spriteRenderer.transform.DOScaleY(0 , 0.5f)
+                           .SetEase(Ease.OutQuad)
+                           .OnStepComplete(() => Destroy(gameObject));
+            _spriteRenderer.DOFade(0 , 0.5f);
             rainaGround.transform.position = _shadow.position;
             var spriteRenderer = rainaGround.AddComponent<SpriteRenderer>();
-            spriteRenderer.sprite = _rainaData.Sprite_Ground;
-            Destroy(gameObject);
+            spriteRenderer.sprite            = _rainaData.Sprite_Ground;
+            rainaGround.transform.localScale = Vector3.zero;
+            rainaGround.transform.DOScale(Vector3.one , 1)
+                       .SetEase(Ease.OutQuad);
+            Destroy(_shadow.gameObject);
         }
 
     #endregion
