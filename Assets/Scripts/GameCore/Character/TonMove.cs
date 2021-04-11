@@ -98,9 +98,8 @@ namespace GameCore.Character
         private void HandleDashing()
         {
             if (isDashing == false) return;
-            float x = currentFlipX ? -1 : 1;
-            x *= MoveSpeed_Horzontal;
-            var y = _lastMovinVector.y;
+            var x = Mathf.Clamp(_lastMovinVector.x , -1 , 1) * MoveSpeed_Horzontal * 2.5f;
+            var y = Mathf.Clamp(_lastMovinVector.y , -1 , 1) * MoveSpeed_Vertical * 2.5f;
             Moving(x , y);
         }
 
@@ -143,7 +142,7 @@ namespace GameCore.Character
             {
                 isDashing = true;
                 _animator.Play("Dash");
-                Observable.Timer(TimeSpan.FromSeconds(0.5f))
+                Observable.Timer(TimeSpan.FromSeconds(0.15f))
                           .Subscribe(_ => isDashing = false);
             }
 
