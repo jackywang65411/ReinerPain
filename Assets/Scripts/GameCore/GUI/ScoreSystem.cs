@@ -3,43 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ScoreSystem : MonoBehaviour , IGUI
+public class ScoreSystem : MonoBehaviour
 {
-    int _Score;
-    int _ReinerHealth;
-    
-    public ScoreSystem(int value)
-    {
-        _Score = value;
-    }
-    public int GetScore
-    {
-        get { return _Score; }
-    }
-    public int ResetScore
-    {
-        set { _Score = 0; }
-    }
-    public int Health
-    {
-        get { return _ReinerHealth; }
-        set { _ReinerHealth = value; }
-    }
-
-    public void AddScore(int AddNewScore)
-    {
-        _Score += AddNewScore;
-    }
     [SerializeField]
     Image[] imgHpSet;
+    [SerializeField]
+    Text txtScoreSet;
 
+    static int score;
     static int hpMax;
     static int hpNow;
     static Image[] imgHp;
+    static Text txtScore;
     void Awake() {
         imgHp = imgHpSet;
         hpMax = imgHp.Length;
         hpNow = hpMax;
+        txtScore = txtScoreSet;
+        txtScore.text = score+"";
+        for (int i = 0; i < imgHp.Length; i++) {
+            if (i < hpNow) {
+                imgHp[i].enabled = true;
+            } else {
+                imgHp[i].enabled = false;
+            }
+        }
     }
     /// <summary>
     /// 回傳當前HP
@@ -86,12 +74,21 @@ public class ScoreSystem : MonoBehaviour , IGUI
         }
         return hpNow;
     }
-}
-
-interface IGUI
-{
-    int GetScore { get; }
-    int ResetScore { set; }
-    int Health { get; set; }
-
+    public static int ScoreNow() {
+        return score;
+    }
+    public static int ScoreIs(int value) {
+        score += value;
+        txtScore.text = score+"";
+        return score;
+    }
+    public static int ScoreTo(int value) {
+        score = value;
+        txtScore.text = score + "";
+        return score;
+    }
+    public static void Reset() {
+        HpTo(5);
+        ScoreTo(0);
+    }
 }
