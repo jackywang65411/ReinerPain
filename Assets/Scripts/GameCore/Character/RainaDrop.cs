@@ -1,5 +1,4 @@
 using DG.Tweening;
-using GameCore.GameMechanics;
 using GameCore.Manager;
 using GameCore.ScriptableObjects;
 using UniRx;
@@ -111,13 +110,6 @@ namespace GameCore.Character
             return isCatch;
         }
 
-        private void DoGameOver()
-        {
-            AudioManagerScript.Instance.PlayAudioClip("yelling");
-            FindObjectOfType<SpawnManager>().Stop();
-            FindObjectOfType<GameSceneManager>().LoadEndingScene();
-        }
-
         private void RainaInit()
         {
             _shadow            =  transform.Find("Shadow");
@@ -156,9 +148,8 @@ namespace GameCore.Character
             {
                 isDie = true;
                 AudioManagerScript.Instance.PlayAudioClip("oh_shit");
-                var currentHp = ScoreSystem.HpIs(-1);
+                FindObjectOfType<GameSceneManager>().SubtractHp(1);
                 SpawnRainaGround();
-                if (currentHp <= 0) DoGameOver();
             }
         }
 
