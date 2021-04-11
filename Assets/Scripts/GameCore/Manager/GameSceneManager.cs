@@ -1,4 +1,3 @@
-using System.Runtime.Serialization;
 using GameCore.ScriptableObjects;
 using UniRx;
 using UnityEngine;
@@ -9,28 +8,41 @@ namespace GameCore.Manager
 {
     public class GameSceneManager : MonoBehaviour
     {
+    #region Private Variables
+
         [SerializeField]
         private GameSetting _gameSetting;
 
-        private void Awake()
-        {
-            SceneManager.LoadScene("GUI" , LoadSceneMode.Additive);
-            SceneManager.LoadScene("EndingScene" , LoadSceneMode.Additive);
-        }
+    #endregion
+
+    #region Unity events
 
         private void Start()
         {
             EndingManager.Instance.ShowEnding(1000);
-            var restart = EndingManager.Instance.transform.Find("Restart Button").gameObject;
-            var restartButton     = restart.GetComponent<Button>();
+            var restart       = EndingManager.Instance.transform.Find("Restart Button").gameObject;
+            var restartButton = restart.GetComponent<Button>();
             restartButton.OnClickAsObservable()
                          .Subscribe(_ => Restart());
+        }
+
+    #endregion
+
+    #region Private Methods
+
+        private void Awake()
+        {
+            SceneManager.LoadScene("GUI" , LoadSceneMode.Additive);
+            // SceneManager.LoadScene("EndingScene" , LoadSceneMode.Additive);
         }
 
         private void Restart()
         {
             SceneManager.UnloadSceneAsync("EndingScene");
-            Debug.Log($"Restart");
+            SceneManager.UnloadSceneAsync("GUI");
+            SceneManager.LoadScene("GameScene");
         }
+
+    #endregion
     }
 }

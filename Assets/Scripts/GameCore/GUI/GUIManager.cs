@@ -1,22 +1,37 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class GUIManager : MonoBehaviour
 {
+#region Public Variables
+
     public int Score;
-    ScoreSystem Scoresys;
 
-    Text NowScore;
-    void Start()
+#endregion
+
+#region Private Variables
+
+    private ScoreSystem Scoresys;
+
+    private Text NowScore;
+
+#endregion
+
+#region Unity events
+
+    private void Start()
     {
-        Scoresys = new ScoreSystem(Score);
-
+        // Scoresys = new ScoreSystem(Score);
     }
 
-    void Update()
+#endregion
+
+#region Private Methods
+
+    private void Update()
     {
-        NowScore.text = "Score: " + Score.ToString();
+        NowScore.text = "Score: " + Score;
     }
+
+#endregion
 }
