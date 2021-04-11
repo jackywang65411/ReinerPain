@@ -1,3 +1,4 @@
+using System;
 using GameCore.ScriptableObjects;
 using UniRx;
 using UnityEngine;
@@ -22,24 +23,7 @@ namespace GameCore.Manager
         private void Start()
         {
             ScoreSystem.Reset();
-            SceneManager.sceneLoaded += (scene , mode) => OnSceneLoaded(scene);
             AudioManagerScript.Instance.PlayAudioClip("song");
-        }
-
-    #endregion
-
-    #region Events
-
-        private void OnSceneLoaded(Scene scene)
-        {
-            if (scene.name == "EndingScene")
-            {
-                EndingManager.Instance.ShowEnding(_currentScore);
-                var restart       = EndingManager.Instance.transform.Find("Restart Button").gameObject;
-                var restartButton = restart.GetComponent<Button>();
-                restartButton.OnClickAsObservable()
-                             .Subscribe(_ => Restart());
-            }
         }
 
     #endregion
@@ -60,6 +44,8 @@ namespace GameCore.Manager
         public void LoadEndingScene()
         {
             SceneManager.LoadScene("EndingScene" , LoadSceneMode.Additive);
+            Observable.Timer(TimeSpan.FromSeconds(0.1f))
+                      .Subscribe(_ => BindingRestartButton());
         }
 
     #endregion
@@ -69,6 +55,18 @@ namespace GameCore.Manager
         private void Awake()
         {
             SceneManager.LoadScene("GUI" , LoadSceneMode.Additive);
+        }
+
+        private void BindingRestartButton()
+        {
+            EndingManager.Instance.ShowEnding(_currentScore);
+            var restart       = EndingManager.Instance.transform.Find("Restart Button").gameObject;
+            var restartButton = restart.GetComponent<Button>();
+
+            restartButton.OnClickAsObservable()
+                         .Take(1)
+                         .Subscribe(_ => Restart())
+                         .AddTo(restartButton);
         }
 
         private void Restart()
