@@ -13,6 +13,8 @@ namespace GameCore.Character
 
     #region Private Variables
 
+        private Animator _animator;
+
         private Transform _transform;
 
         [SerializeField]
@@ -42,7 +44,12 @@ namespace GameCore.Character
         private void Start()
         {
             _transform = transform;
-            if (SpriteRenderer) SpriteRenderer.flipX = !DefaultFaceRight;
+
+            if (SpriteRenderer)
+            {
+                SpriteRenderer.flipX = !DefaultFaceRight;
+                _animator            = SpriteRenderer.GetComponent<Animator>();
+            }
         }
 
     #endregion
@@ -58,6 +65,13 @@ namespace GameCore.Character
     #endregion
 
     #region Private Methods
+
+        private void ControlMoving(float x , float y , float horizontalValue)
+        {
+            _transform.position += new Vector3(x , y , 0) * Time.deltaTime;
+            if (CanControl == false) return;
+            HandlerFlip(horizontalValue);
+        }
 
         private bool GetFaceValue(int horizontalValue)
         {
@@ -83,15 +97,23 @@ namespace GameCore.Character
             currentFlipX = SpriteRenderer.flipX;
         }
 
+        private void SetAnimation(float x , float y)
+        {
+            if (CanControl == false)
+                return;
+            var animationName                   = "Idle";
+            if (x != 0 || y != 0) animationName = "Move";
+            _animator.Play(animationName);
+        }
+
         private void Update()
         {
             var horizontalValue = CanControl ? Input.GetAxisRaw("Horizontal") : 1;
             var verticalValue   = CanControl ? Input.GetAxisRaw("Vertical") : 1;
             var x               = horizontalValue * MoveSpeed_Horzontal;
             var y               = verticalValue * MoveSpeed_Vertical;
-            _transform.position += new Vector3(x , y , 0) * Time.deltaTime;
-            if (CanControl == false) return;
-            HandlerFlip(horizontalValue);
+            SetAnimation(x , y);
+            ControlMoving(x , y , horizontalValue);
         }
 
     #endregion
